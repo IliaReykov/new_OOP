@@ -7,25 +7,36 @@ class Category:
         self.name = name
         self.description = description
         self.prod = prod
-        """self.email = f"{first}.{last}@email.com"""
+
+
+ctgr = Category("Личная гигиена", "Предметы для личной гигены", "Мыло")
+ctgr_2 = Category("Хоз. товары", "Товары для хозяйства", "Вантуз")
 
 
 class Product:
     name: str
     description: str
-    price: float
-    amount: int
+    prod: str
+    price = float
+    amount = int
+    categories = int
+    uniq_prod = int
+
+    def __init__(self, name, description, price, amount, categories, uniq_prod):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.amount = amount
+        self.categories = categories
+        self.uniq_prod = uniq_prod
+
+prdct = Product("Мыло", "Мыло - это мыло!", 10.4, 4, )
 
 
-ctgr_1 = Category("Ivan", "Ivanov", 50_000)
-prdct_2 = Product()
-'''
-emp_2.name = "Andrey"
-emp_2.surname = "Ivanov"
-emp_2.email = "andrey2@mai.com"
-emp_2.pay = 66_666
-'''
+print(f'Категория товаров: {ctgr.name}')
+print(f'Описание категории: {ctgr.description}')
+print(f'Описание товары в категории: {ctgr.prod}')
 
-print(ctgr_1.name)
-print(ctgr_1.description)
-print(ctgr_1.prod)
+print(f'\nКатегория товаров: {ctgr_2.name}\nОписание товары в категории: {ctgr_2.description}\nОписание товары в категории: {ctgr_2.prod}')
+
+print(f'\nНазвание продукта: {prdct.name}\nОписание продукта: {prdct.description}\nЦена продукта: {prdct.price} Руб.\nКоличество продукта: {prdct.amount} шт.')
