@@ -1,12 +1,19 @@
 class Category:
     name: str
     description: str
-    prod: str
+    prod: list
+
+    uniq_prod = 0
+    num_ctg = 0
 
     def __init__(self, name, description, prod):
         self.name = name
         self.description = description
         self.prod = prod
+
+        Category.num_ctg += 1
+        Category.uniq_prod += 1
+
 
 
 ctgr = Category("Личная гигиена", "Предметы для личной гигены", "Мыло")
@@ -19,18 +26,14 @@ class Product:
     prod: str
     price = float
     amount = int
-    categories = int
-    uniq_prod = int
 
-    def __init__(self, name, description, price, amount, categories, uniq_prod):
+    def __init__(self, name, description, price, amount):
         self.name = name
         self.description = description
         self.price = price
         self.amount = amount
-        self.categories = categories
-        self.uniq_prod = uniq_prod
 
-prdct = Product("Мыло", "Мыло - это мыло!", 10.4, 4, )
+prdct = Product("Мыло", "Мыло - это мыло!", 10.4, 4)
 
 
 print(f'Категория товаров: {ctgr.name}')
@@ -40,3 +43,6 @@ print(f'Описание товары в категории: {ctgr.prod}')
 print(f'\nКатегория товаров: {ctgr_2.name}\nОписание товары в категории: {ctgr_2.description}\nОписание товары в категории: {ctgr_2.prod}')
 
 print(f'\nНазвание продукта: {prdct.name}\nОписание продукта: {prdct.description}\nЦена продукта: {prdct.price} Руб.\nКоличество продукта: {prdct.amount} шт.')
+
+print(f'\nКатегорий продуктов: {Category.num_ctg}')
+print(f'\nУникальных продуктов: {Category.uniq_prod}')
