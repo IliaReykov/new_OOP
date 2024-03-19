@@ -15,10 +15,6 @@ class Category:
         Category.uniq_prod = len(prod)
 
 
-ctgr = Category("Личная гигиена", "Предметы для личной гигены", "Мыло")
-ctgr_2 = Category("Хоз. товары", "Товары для хозяйства", "Вантуз")
-
-
 class Product:
     name: str
     description: str
@@ -32,18 +28,18 @@ class Product:
         self.price = price
         self.amount = amount
 
-
-prdct = Product("Мыло", "Мыло - это мыло!", 10.4, 4)
+if __name__ == '__main__':
+    prdct = Product("Мыло", "Мыло - это мыло!", 10.4, 4)
+    ctgr = Category("Личная гигиена", "Предметы для личной гигены", "Мыло")
+    ctgr_2 = Category("Хоз. товары", "Товары для хозяйства", "Вантуз")
 
 print(f'Категория товаров: {ctgr.name}')
 print(f'Описание категории: {ctgr.description}')
 print(f'Описание товары в категории: {ctgr.prod}')
 
-print(
-    f'\nКатегория товаров: {ctgr_2.name}\nОписание товары в категории: {ctgr_2.description}\nОписание товары в категории: {ctgr_2.prod}')
+print(f'\nКатегория товаров: {ctgr_2.name}\nОписание товары в категории: {ctgr_2.description}\nОписание товары в категории: {ctgr_2.prod}')
 
-print(
-    f'\nНазвание продукта: {prdct.name}\nОписание продукта: {prdct.description}\nЦена продукта: {prdct.price} Руб.\nКоличество продукта: {prdct.amount} шт.')
+print(f'\nНазвание продукта: {prdct.name}\nОписание продукта: {prdct.description}\nЦена продукта: {prdct.price} Руб.\nКоличество продукта: {prdct.amount} шт.')
 
 print(f'\nКатегорий продуктов: {Category.num_ctg}')
 print(f'\nУникальных продуктов: {Category.uniq_prod}')
