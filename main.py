@@ -12,7 +12,7 @@ class Category:
         self.prod = prod
 
         Category.num_ctg += 1
-        Category.uniq_prod = len(prod)
+        Category.uniq_prod += len(prod)
 
 
 class Product:
