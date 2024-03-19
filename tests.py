@@ -13,7 +13,7 @@ def test_init(category_test):
     assert category_test.name == 'Личная гигиена'
     assert category_test.description == 'Предметы для личной гигены'
     assert category_test.prod == 'Мыло'
-    assert category_test.num_ctg == 0
+    assert category_test.num_ctg == 1
     assert category_test.uniq_prod == 4
 
 
