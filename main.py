@@ -9,11 +9,34 @@ class Category:
     def __init__(self, name, description, prod):
         self.name = name
         self.description = description
-        self.prod = prod
+        self.__prod = prod
 
         Category.num_ctg += 1
-        Category.uniq_prod += len(prod)
+        Category.uniq_prod += len(self.__prod)
 
+    def add_products(self,value):
+        self.__prod.append(value)
+        Category.uniq_prod += 1
+
+    @property
+    def products(self):
+        return self.__prod
+
+    @property
+    def spisok_prods(self):
+        left = ''
+        for prod in self.__prod:
+            left += f'{prod.name} - {prod.price}руб. Осталось: {prod.amount}\n'
+        return left
+
+    def __str__(self):
+        return f'{self.name}, количество продуктов: {len(self)} шт.'
+
+    def __len__(self):
+        amt = 0
+        for product in self.__prod:
+            amt += product.amount
+        return amt
 
 class Product:
     name: str
@@ -28,15 +51,31 @@ class Product:
         self.price = price
         self.amount = amount
 
-if __name__ == '__main__':
-    prdct = Product("Мыло", "Мыло - это мыло!", 10.4, 4)
-    ctgr = Category("Личная гигиена", "Предметы для личной гигены", "Мыло")
-    ctgr_2 = Category("Хоз. товары", "Товары для хозяйства", "Вантуз")
+    @classmethod
+    def add_product(cls, name, description, price, quantity):
+        return cls(name, description, price, quantity)
 
-    print(f'Категория товаров: {ctgr.name}')
-    print(f'Описание категории: {ctgr.description}')
-    print(f'Описание товары в категории: {ctgr.prod}')
-    print(f'\nКатегория товаров: {ctgr_2.name}\nОписание товары в категории: {ctgr_2.description}\nОписание товары в категории: {ctgr_2.prod}')
-    print(f'\nНазвание продукта: {prdct.name}\nОписание продукта: {prdct.description}\nЦена продукта: {prdct.price} Руб.\nКоличество продукта: {prdct.amount} шт.')
-    print(f'\nКатегорий продуктов: {Category.num_ctg}')
-    print(f'\nУникальных продуктов: {Category.uniq_prod}')
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, value):
+        if value <= 0:
+            print('Цена введена некорректная')
+        else:
+            self.__price = value
+
+    def __str__(self):
+        return f'{self.name}, {self.__price} руб. Остаток: {self.amount} шт.'
+
+    def __add__(self, other):
+        return self.__price * self.amount + other.price * other.amount
+
+    def __add__(self, other):
+        if isinstance(other, self.__class__):
+            return self.__price * self.amount + other.price * other.amount
+
+        raise TypeError
+
+
