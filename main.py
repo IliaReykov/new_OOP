@@ -9,7 +9,7 @@ class Category:
     def __init__(self, name, description, prod):
         self.name = name
         self.description = description
-        self.__prod = prod
+        self.__prod = []
 
         Category.num_ctg += 1
         Category.uniq_prod += len(self.__prod)
@@ -29,8 +29,11 @@ class Category:
             left += f'{prod.name} - {prod.price}руб. Осталось: {prod.amount}\n'
         return left
 
+    def __repr__(self):
+        return f'{self.name}, {self.description}, {self.__prod}'
+
     def __str__(self):
-        return f'{self.name}, количество продуктов: {len(self)} шт.'
+        return f'Название категории: {self.name}, количество продуктов: {len(self)} шт.'
 
     def __len__(self):
         amt = 0
@@ -67,15 +70,23 @@ class Product:
             self.__price = value
 
     def __str__(self):
-        return f'{self.name}, {self.__price} руб. Остаток: {self.amount} шт.'
+        return f'Название продукта: {self.name}, Цена: {self.__price}руб. Остаток: {self.amount}шт.'
 
     def __add__(self, other):
-        return self.__price * self.amount + other.price * other.amount
+        return (self.__price * self.amount) + (other.price * other.amount)
 
-    def __add__(self, other):
-        if isinstance(other, self.__class__):
-            return self.__price * self.amount + other.price * other.amount
 
+    def __len__(self):
+        return sum(product.prod for product in self.__prod)
         raise TypeError
 
 
+product_1 = Product('Мыло', 'гигиена', 60, 8)
+product_2 = Product('Губка', 'товары для кухни', 40, 12)
+category_1 = Category('Хоз. товары', 'Хозяйственные товары', '')
+category_2 = Category('Товары для кухни', 'Кухонные товары', '')
+
+print(f'Название: {category_1.name}\nОписание категории: {category_1.description}\n')
+print(f'Название: {category_2.name}\nОписание категории: {category_2.description}\n')
+print(f'Название: {product_1.name}\nОписание товара: {product_1.description}\nЦена: {product_1.price}\nКоличесвто: {product_1.amount}\n')
+print(f'Название: {product_2.name}\nОписание товара: {product_2.description}\nЦена: {product_2.price}\nКоличесвто: {product_2.amount}\n')
