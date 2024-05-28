@@ -1,43 +1,43 @@
 class Category:
     name: str
     description: str
-    prod: list
-
+    __products: list
     uniq_prod = 0
     num_ctg = 0
 
-    def __init__(self, name, description, prod):
+    def __init__(self, name, description, products):
         self.name = name
         self.description = description
-        self.__prod = []
+        self.__products = []
 
         Category.num_ctg += 1
-        Category.uniq_prod += len(self.__prod)
+        Category.uniq_prod += len(self.__products)
 
-    def add_products(self,value):
-        self.__prod.append(value)
-        Category.uniq_prod += 1
+    def add_product(self, product):
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.uniq_prod += 1
 
     @property
     def products(self):
-        return self.__prod
+        return self.products
 
     @property
     def spisok_prods(self):
         left = ''
-        for prod in self.__prod:
+        for prod in self.products:
             left += f'{prod.name} - {prod.price}руб. Осталось: {prod.amount}\n'
         return left
 
     def __repr__(self):
-        return f'{self.name}, {self.description}, {self.__prod}'
+        return f'{self.name}, {self.description}, {self.__products}'
 
     def __str__(self):
         return f'Название категории: {self.name}, количество продуктов: {len(self)} шт.'
 
     def __len__(self):
         amt = 0
-        for product in self.__prod:
+        for product in self.__products:
             amt += product.amount
         return amt
 
@@ -51,7 +51,7 @@ class Product:
     def __init__(self, name, description, price, amount):
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.amount = amount
 
     @classmethod
@@ -80,13 +80,45 @@ class Product:
         return sum(product.prod for product in self.__prod)
         raise TypeError
 
+class Phone(Product):
+    perfomance: int
+    model: str
+    storage: int
+    color_phone: str
 
-product_1 = Product('Мыло', 'гигиена', 60, 8)
-product_2 = Product('Губка', 'товары для кухни', 40, 12)
-category_1 = Category('Хоз. товары', 'Хозяйственные товары', '')
-category_2 = Category('Товары для кухни', 'Кухонные товары', '')
+    @property
+    def price(self):
+        return self.__price
 
-print(f'Название: {category_1.name}\nОписание категории: {category_1.description}\n')
-print(f'Название: {category_2.name}\nОписание категории: {category_2.description}\n')
-print(f'Название: {product_1.name}\nОписание товара: {product_1.description}\nЦена: {product_1.price}\nКоличесвто: {product_1.amount}\n')
-print(f'Название: {product_2.name}\nОписание товара: {product_2.description}\nЦена: {product_2.price}\nКоличесвто: {product_2.amount}\n')
+    def __add__(self, other):
+        if type(self) == type(other):
+            return (self.__price * self.amount) + (other.price * other.amount)
+        raise ValueError("Можно складывать только экземпляры этого класса")
+
+    def __init__(self, name, description, price, amount, perfomance, model, storage, color_phone):
+        super().__init__(name, description, price, amount)
+        self.perfomance = perfomance
+        self.model = model
+        self.storage = storage
+        self.color_phone = color_phone
+
+class Grass(Product):
+    made_in: str
+    growth_time: int
+    color_grass: str
+
+    def __init__(self,name, description, price, amount, made_in, growth_time, color_grass):
+        super().__init__(name, description, price, amount)
+        self.made_in = made_in
+        self.growth_time = growth_time
+        self.color_grass = color_grass
+
+if __name__ == "__main__":
+    phone_1 = Phone("GoodPhone", "Smartphone", 12599, 12, 43000, 40, 16, "Ocean Blue")
+    print(phone_1.__dict__)
+    phone_2 = Phone("WellPhone", "Smartphone", 21999, 40, 99999, 7, 256, "Gold Star")
+    print(phone_2.__dict__)
+    grass_1 = Grass("Swedden Grass", "Grass", 4599, 12, "Swedden", 12, "Green")
+    print(grass_1.__dict__)
+    grass_2 = Grass("Australian Grass", "Grass", 1499, 40, "Australia", 36, "Yellow")
+    print(grass_2.__dict__)
