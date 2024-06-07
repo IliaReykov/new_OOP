@@ -7,6 +7,18 @@ class Base_Product:
         pass
 
 
+class MixinLog:
+    ID = 1
+
+    def __init__(self):
+        MixinLog.ID += 1
+        self.prod_num()
+        super().__init__()
+
+    def prod_num(self):
+        print(f'Товар номер:{self.ID}')
+
+
 class Product(Base_Product):
     name: str
     description: str
@@ -46,7 +58,7 @@ class Product(Base_Product):
         raise TypeError
 
 
-class Phone(Product):
+class Phone(MixinLog, Product):
     perfomance: int
     model: str
     storage: int
