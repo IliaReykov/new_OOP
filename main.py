@@ -6,20 +6,24 @@ class Base_Product:
     def __init__(self):
         pass
 
-
-class MixinLog:
-    ID = 1
-
-    def __init__(self):
-        MixinLog.ID += 1
-        self.prod_num()
-        super().__init__()
-
-    def prod_num(self):
-        print(f'Товар номер:{self.ID}')
+    @abstractmethod
+    def add_product(cls, name, description, price, quantity):
+        return cls
 
 
-class Product(Base_Product):
+class PrintMixin:
+
+    def __init__(self, *args):
+        print(repr(self))
+
+    def __repr__(self):
+        object_attributes = ''
+        for k, v in self.__dict__.items():
+            object_attributes += f'{k}: {v},'
+        return f"создан объект со свойствами {object_attributes})"
+
+
+class Product(Base_Product, PrintMixin):
     name: str
     description: str
     prod: list
@@ -27,14 +31,11 @@ class Product(Base_Product):
     amount = int
 
     def __init__(self, name, description, price, amount):
+        super().__init__()
         self.name = name
         self.description = description
         self.__price = price
         self.amount = amount
-
-    @classmethod
-    def add_product(cls, name, description, price, quantity):
-        return cls(name, description, price, quantity)
 
     @property
     def price(self):
@@ -58,7 +59,7 @@ class Product(Base_Product):
         raise TypeError
 
 
-class Phone(MixinLog, Product):
+class Phone(Product, PrintMixin):
     perfomance: int
     model: str
     storage: int
@@ -81,7 +82,7 @@ class Phone(MixinLog, Product):
         self.color_phone = color_phone
 
 
-class Grass(Product):
+class Grass(Product, PrintMixin):
     made_in: str
     growth_time: int
     color_grass: str
