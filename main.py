@@ -1,13 +1,22 @@
 from abc import ABC, abstractmethod
 
 
+class User_Exception(Exception):
+
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else ('Ошибка')
+
+    def evaluate(self):
+        pass
+
+
 class Base_Product:
     @abstractmethod
     def __init__(self):
         pass
 
     @abstractmethod
-    def add_product(cls, name, description, price, quantity):
+    def add_product(cls):
         return cls
 
 
