@@ -10,6 +10,11 @@ class User_Exception(Exception):
         pass
 
 
+class User_Exception_Zero_Am(User_Exception):
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Не указано количество товара'
+
+
 class Base_Product:
     @abstractmethod
     def __init__(self):
@@ -45,6 +50,11 @@ class Product(Base_Product, PrintMixin):
         self.description = description
         self.__price = price
         self.amount = amount
+
+        if not amount or amount == 0:
+            raise User_Exception_Zero_Am
+        else:
+            pass
 
     @property
     def price(self):
